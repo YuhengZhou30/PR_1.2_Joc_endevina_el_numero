@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".UserNameInput">
+            <!-- Add any necessary intent filters or other configuration here -->
+        </activity>
+        <activity android:name=".RankingActivity" />
+
     </application>
 
 </manifest>
