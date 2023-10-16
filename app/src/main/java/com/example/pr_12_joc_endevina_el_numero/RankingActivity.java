@@ -1,21 +1,24 @@
 package com.example.pr_12_joc_endevina_el_numero;
 
-import static com.example.pr_12_joc_endevina_el_numero.MainActivity.Datos;
+
 import static com.example.pr_12_joc_endevina_el_numero.MainActivity.montonDatos;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class RankingActivity extends AppCompatActivity {
 
@@ -25,14 +28,24 @@ public class RankingActivity extends AppCompatActivity {
         setContentView(R.layout.ranking);
         ArrayList<Object[]> dato = new ArrayList<>();
         for (userData u : montonDatos) {
+
             dato.add( new Object[]{u.getNombre(), u.getContador()} );
         }
 
-        Button volver = findViewById(R.id.myButton);
-        TableLayout tableLayout = findViewById(R.id.tableLayout);
 
-// Iterar a través de los datos y agregar filas dinámicamente
-        int posicion=1;
+// Ordenar el dato en base a la puntuación de pequeño a grande
+        Collections.sort(dato, new Comparator<Object[]>() {
+            @Override
+            public int compare(Object[] o1, Object[] o2) {
+                int puntuacion1 = (int) o1[1];
+                int puntuacion2 = (int) o2[1];
+                return Integer.compare(puntuacion1, puntuacion2);
+            }
+        });
+
+        TableLayout tableLayout = findViewById(R.id.tableLayout);
+        int posicion = 1;
+
         for (Object[] data : dato) {
             String nombreUsuario = (String) data[0];
             int puntuacion = (int) data[1];
@@ -61,12 +74,20 @@ public class RankingActivity extends AppCompatActivity {
             tableRow.addView(textViewScore);
 
             // Agrega la fila al TableLayout
-
-            tableLayout.addView(tableRow,-1);
-            posicion+=1;
+            tableLayout.addView(tableRow, -1);
+            posicion += 1;
         }
 
-        volver.setOnClickListener(new View.OnClickListener() {
+        Button volverButton = new Button(this);
+        volverButton.setText("Volver");
+        volverButton.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        volverButton.setGravity(Gravity.CENTER);
+        tableLayout.addView(volverButton,-1);
+
+        volverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent principal = new Intent(RankingActivity.this, MainActivity.class);

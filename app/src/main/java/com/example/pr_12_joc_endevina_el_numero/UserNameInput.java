@@ -1,6 +1,5 @@
 package com.example.pr_12_joc_endevina_el_numero;
 
-import static com.example.pr_12_joc_endevina_el_numero.MainActivity.Datos;
 import static com.example.pr_12_joc_endevina_el_numero.MainActivity.montonDatos;
 
 import android.content.Intent;
@@ -15,14 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class UserNameInput extends AppCompatActivity {
-    private  ArrayList<Object[]> userData = new ArrayList<>();
+    userData Datos = new userData(); // Crea una nueva instancia de userData
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_input_name);
         EditText editText = findViewById(R.id.editTextText);
         Button button = findViewById(R.id.button2);
-        Intent anterior=getIntent();
 
 
         editText.setHint("Ingresa tu nombre");
@@ -40,7 +40,11 @@ public class UserNameInput extends AppCompatActivity {
                 if (salir){
                     Intent intent = new Intent(UserNameInput.this, RankingActivity.class);
                     Datos.setNombre(nameUser);
+                    Intent anterior = getIntent();
+                    int contador = anterior.getIntExtra("contandor",-1);
+                    Datos.setContador(contador);
                     montonDatos.add(Datos);
+
                     startActivity(intent);
                 }
             }

@@ -15,7 +15,6 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public static ArrayList<userData> montonDatos=  new ArrayList<userData>();
-    public static userData Datos =new userData();
     private EditText editTextNumber;
     private Button button;
     private TextView textView;
@@ -103,8 +102,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(MainActivity.this, UserNameInput.class);
-                Datos.setContador(contandor);
 
+                intent.putExtra("contandor", contandor);
+                //Toast.makeText(MainActivity.this, montonDatos.toString(), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 dialog.dismiss(); // Cierra el AlertDialog
             }
@@ -147,4 +147,13 @@ public class MainActivity extends AppCompatActivity {
     public void setContador(int contador) {
         this.contador = contador;
     }
-}
+     @Override
+     public String toString() {
+         return "userData{" +
+                 "nombre='" + nombre + '\'' +
+                 ", contador=" + contador +
+                 '}';
+     }
+
+
+ }
